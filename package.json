@@ -1,0 +1,19 @@
+{
+  "name": "tosi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes-js": "^3.1.0",
+    "bcryptjs": "^2.4.3",
+    "chalk": "^2.3.0",
+    "inquirer": "^4.0.1",
+    "lodash": "^4.17.4",
+    "node-rsa": "^0.4.2"
+  }
+}
