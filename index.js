@@ -2,8 +2,14 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 
 const AES = require('./types/aes');
+const RC2 = require('./types/rc2');
 const RSA = require('./types/rsa');
+const RSA2 = require('./types/rsa2');
 const BCRYPT = require('./types/bcrypt');
+const BCRYPT2 = require('./types/bcrypt2');
+const DIFFIEHELLMAN = require('./types/diffie-hellman');
+const HMAC = require('./types/hmac');
+const HMAC2 = require('./types/hmac2');
 
 const log = console.log;
 
@@ -40,7 +46,7 @@ inquirer
             type: 'list',
             name: 'type',
             message: 'What type do you need',
-            choices: ['AES', 'RSA', 'BCRYPT'],
+            choices: ['AES', 'RSA', 'RC2', 'BCRYPT', 'DIFFIE-HELLMAN'],
             filter: (val) => val.toLowerCase(),
             when: (answers) => {
                 return (answers.operation !== 'test-all' && answers.operation !== 'hash')
@@ -134,6 +140,15 @@ inquirer
                         case 'bcrypt':
                             BCRYPT.testHash(text);
                             break;
+                        case 'rc2':
+                            RC2.testCrypt(text);
+                            break;
+                        case 'diffie-hellman':
+                            RC2.testCrypt(text);
+                            break;
+                        case 'hmac':
+                            HMAC.testHash(text);
+                            break;
                     }
                     break;
                 case 'encrypt':
@@ -166,6 +181,9 @@ inquirer
                         case 'bcrypt':
                             BCRYPT.compare(text, answers.hash)
                             break;
+                        case 'hmac':
+                            HMAC.compare(text, answers.hash)
+                            break;
                     }
                     break;
                 case 'test-all':
@@ -174,15 +192,40 @@ inquirer
                     AES.testCrypt(text);
                     console.timeEnd('AES time');
                     console.log('\n');
+                    console.log(chalk.blue('RC2'))
+                    console.time('RC2 time');
+                    RC2.testCrypt(text);
+                    console.timeEnd('RC2 time');
+                    console.log('\n');
                     console.log(chalk.blue('RSA'))
                     console.time('RSA time');
                     RSA.testCrypt(text);
                     console.timeEnd('RSA time');
                     console.log('\n');
-                    console.log(chalk.blue('BCRYPT'))
+                    console.log(chalk.blue('RSA2'))
+                    console.time('RSA2 time');
+                    RSA2.testCrypt(text);
+                    console.timeEnd('RSA2 time');
+                    console.log('\n');
+                    console.log(chalk.blue('BCRYPT'));
                     console.time('BCRYPT time');
                     BCRYPT.testHash(text);
                     console.timeEnd('BCRYPT time');
+                    console.log('\n');
+                    console.log(chalk.blue('BCRYPT2'));
+                    console.time('BCRYPT2 time');
+                    BCRYPT2.testHash(text);
+                    console.timeEnd('BCRYPT2 time');
+                    console.log('\n');
+                    console.log(chalk.blue('HMAC'))
+                    console.time('HMAC time');
+                    HMAC.testHash(text);
+                    console.timeEnd('HMAC time');
+                    console.log('\n');
+                    console.log(chalk.blue('HMAC2'))
+                    console.time('HMAC2 time');
+                    HMAC.testHash(text);
+                    console.timeEnd('HMAC2 time');
                     break;
             }
         } catch (err) {
